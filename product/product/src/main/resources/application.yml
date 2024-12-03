@@ -1,0 +1,10 @@
+server:
+  port: 19093
+
+spring:
+  application:
+    name: product-service
+  profiles:
+    include:
+      - dev
+

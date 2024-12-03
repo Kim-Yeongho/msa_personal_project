@@ -1,0 +1,38 @@
+server:
+  port: 19092
+
+spring:
+  application:
+    name: order-service
+  cloud:
+    circuitbreaker:
+      resilience4j:
+        enable: true
+  profiles:
+   include:
+     - dev
+
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        registerHealthIndicator: true
+        slidingWindowType: COUNT_BASED
+        slidingWindowSize: 5
+        minimumNumberOfCalls: 10
+        slowCallRateThreshold: 100
+        slowCallDurationThreshold: 60000
+        failureRateThreshold: 30
+        permittedNumberOfCallsInHalfOpenState: 3
+        waitDurationInOpenState: 15s
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus
+  prometheus:
+    metrics:
+      export:
+        enabled: true
